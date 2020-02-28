@@ -4,7 +4,8 @@ namespace Microsoft.AspNetCore.Http
 {
 	public static class PathStringExtensions
 	{
-		public static bool EndsWithSegments(this PathString pathString, PathString other)
+        #region EndsWith
+        public static bool EndsWithSegments(this PathString pathString, PathString other)
 		{
 			return EndsWithSegments(pathString, other, StringComparison.OrdinalIgnoreCase);
 		}
@@ -46,5 +47,51 @@ namespace Microsoft.AspNetCore.Http
 			remaining = PathString.Empty;
 			return false;
 		}
+        #endregion
+
+        #region Routing
+        public static bool IsRouting(this PathString path, string startPath, string endPath)
+		{
+			return path.IsRouting(new PathString(startPath), new PathString(endPath));
+		}
+
+		public static bool IsRouting(this PathString path, PathString startPath, PathString endPath)
+		{
+			return path.StartsWithSegments(startPath, out PathString remainingPath)
+				 && remainingPath.EndsWithSegments(endPath);
+		}
+		#endregion
+
+		#region Replace
+		public static PathString StartReplace(this PathString path, string oldPath, string newPath)
+		{
+			return path.StartReplace(new PathString(oldPath), new PathString(newPath));
+		}
+
+		public static PathString StartReplace(this PathString path, PathString oldPath, PathString newPath)
+		{
+			if (path.StartsWithSegments(oldPath, out PathString remainingPath))
+			{
+				return newPath + remainingPath;
+			}
+
+			return path;
+		}
+
+		public static PathString EndReplace(this PathString path, string oldPath, string newPath)
+		{
+			return path.EndReplace(new PathString(oldPath), new PathString(newPath));
+		}
+
+		public static PathString EndReplace(this PathString path, PathString oldPath, PathString newPath)
+		{
+			if (path.EndsWithSegments(oldPath, out PathString remainingPath))
+			{
+				return remainingPath + newPath;
+			}
+
+			return path;
+		}
+		#endregion
 	}
 }
