@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>1.0.4</Version>
-    <AssemblyVersion>1.0.4.0</AssemblyVersion>
-    <FileVersion>1.0.4.0</FileVersion>
+    <Version>1.0.5</Version>
+    <AssemblyVersion>1.0.5.0</AssemblyVersion>
+    <FileVersion>1.0.5.0</FileVersion>
     <Authors>HEF-Sharp</Authors>
     <Description>AspNetCore Mvc Extensions for HEF</Description>
     <Company>GreatBillows</Company>
@@ -21,6 +21,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="HEF.Core" Version="1.0.5" />
     <PackageReference Include="HEF.Util" Version="1.0.2" />
   </ItemGroup>
 
